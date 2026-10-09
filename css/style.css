@@ -1,6 +1,8 @@
 /* Colori: tema chiaro, poi tema scuro automatico */
 :root {
   --sfondo: #f7f5f0;
+  --superficie: #ffffff;
+  --bordo: #e2ded5;
   --testo: #1b1a18;
   --testo-tenue: #6b6862;
   --accento: #b91c1c;
@@ -9,12 +11,17 @@
   /* "Microsoft YaHei" serve solo per le prove sul PC Windows */
   --font-zh: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
 
+  /* Altezza della barra in basso, senza la safe area */
+  --altezza-barra: 56px;
+
   color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --sfondo: #1b1a18;
+    --superficie: #262522;
+    --bordo: #3a3834;
     --testo: #f2f0eb;
     --testo-tenue: #a19d95;
     --accento: #f87171;
@@ -38,61 +45,99 @@ body {
   margin: 0;
   /* 100dvh invece di 100vh: su iPhone 100vh è più alto dello schermo visibile */
   min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
   background: var(--sfondo);
   color: var(--testo);
   font-family: var(--font-ui);
   font-size: 17px;
   line-height: 1.5;
-  /* Margini per notch, isola dinamica e barra in basso (safe area) */
-  padding:
-    calc(env(safe-area-inset-top) + 16px)
-    calc(env(safe-area-inset-right) + 16px)
-    calc(env(safe-area-inset-bottom) + 16px)
-    calc(env(safe-area-inset-left) + 16px);
 }
 
-/* Niente zoom con il doppio tocco sui pulsanti */
+/* Niente zoom con il doppio tocco su pulsanti e link */
 button,
 a {
   touch-action: manipulation;
 }
 
-.home {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.home h1 {
-  margin: 0 0 8px;
-  font-size: 34px;
+a {
   color: var(--accento);
 }
 
+/* ---------- Schermata ---------- */
+
+/* Margini per notch, isola dinamica e barra dell'iPhone (safe area);
+   in basso lascio spazio per la barra di navigazione */
+.schermata {
+  padding:
+    calc(env(safe-area-inset-top) + 16px)
+    calc(env(safe-area-inset-right) + 16px)
+    calc(var(--altezza-barra) + env(safe-area-inset-bottom) + 24px)
+    calc(env(safe-area-inset-left) + 16px);
+}
+
+.schermata h1 {
+  margin: 8px 0 12px;
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+/* Il titolo riceve il focus solo per VoiceOver: niente bordo visibile */
+.schermata h1:focus {
+  outline: none;
+}
+
+.schermata h2 {
+  margin: 28px 0 8px;
+  font-size: 20px;
+}
+
+.schermata p {
+  margin: 0 0 12px;
+}
+
 .nota {
-  margin: 0;
   color: var(--testo-tenue);
 }
 
-.piede {
-  text-align: center;
-  font-size: 13px;
-  color: var(--testo-tenue);
+/* Elenco di righe toccabili, come nelle Impostazioni dell'iPhone */
+.elenco {
+  margin-top: 24px;
+  border-radius: 12px;
+  background: var(--superficie);
+  border: 1px solid var(--bordo);
+  overflow: hidden;
 }
 
-.piede p {
-  margin: 0;
+.riga {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 0 16px;
+  color: var(--testo);
+  text-decoration: none;
+}
+
+.riga + .riga {
+  border-top: 1px solid var(--bordo);
+}
+
+.freccia {
+  color: var(--testo-tenue);
+  font-size: 22px;
+}
+
+/* Link "‹ Impostazioni" in cima alle pagine secondarie */
+.indietro {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
 }
 
 /* Pulsante che sembra un link, ma alto almeno 44 px per il dito */
 .pulsante-testo {
   min-height: 44px;
-  padding: 0 12px;
+  padding: 0;
   border: none;
   background: none;
   color: var(--accento);
@@ -101,22 +146,93 @@ a {
   cursor: pointer;
 }
 
-/* Riga per l'esito del controllo: altezza fissa, così la pagina non salta */
+/* Riga per l'esito di un controllo: altezza fissa, così la pagina non salta */
 .stato {
-  min-height: 20px;
+  min-height: 24px;
+  color: var(--testo-tenue);
 }
+
+.fonti {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fonti li {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  border-top: 1px solid var(--bordo);
+}
+
+.fonti a {
+  font-weight: 600;
+}
+
+.licenza {
+  color: var(--testo-tenue);
+  font-size: 15px;
+}
+
+/* ---------- Barra di navigazione in basso ---------- */
+
+.barra {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  padding:
+    0
+    env(safe-area-inset-right)
+    env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+  background: var(--superficie);
+  border-top: 1px solid var(--bordo);
+}
+
+.barra a {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--altezza-barra);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--testo-tenue);
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.barra a[aria-current="page"] {
+  color: var(--accento);
+  font-weight: 600;
+}
+
+.barra svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- Avviso "Nuova versione disponibile" ---------- */
 
 /* Quando l'avviso è visibile, il contenuto sale e non resta coperto */
-body.con-avviso {
-  padding-bottom: calc(env(safe-area-inset-bottom) + 100px);
+body.con-avviso .schermata {
+  padding-bottom: calc(var(--altezza-barra) + env(safe-area-inset-bottom) + 110px);
 }
 
-/* Avviso "Nuova versione disponibile", in basso sopra la barra dell'iPhone */
+/* L'avviso sta appena sopra la barra di navigazione */
 .avviso {
   position: fixed;
   left: calc(env(safe-area-inset-left) + 16px);
   right: calc(env(safe-area-inset-right) + 16px);
-  bottom: calc(env(safe-area-inset-bottom) + 16px);
+  bottom: calc(var(--altezza-barra) + env(safe-area-inset-bottom) + 12px);
   display: flex;
   align-items: center;
   justify-content: space-between;

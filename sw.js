@@ -2,7 +2,7 @@
 // IMPORTANTE: a ogni modifica di un file dell'app aumenta VERSIONE,
 // altrimenti l'iPhone continua a mostrare la versione vecchia.
 
-const VERSIONE = 3;
+const VERSIONE = 4;
 
 // Tutte le cache dell'app hanno il prefisso "hsk-coach-": i siti GitHub Pages
 // dello stesso account condividono il dominio, così non tocchiamo le cache degli altri.
@@ -12,11 +12,19 @@ const PREFISSO_APP = 'hsk-coach-app-';
 const CACHE_APP = `${PREFISSO_APP}v${VERSIONE}`;
 
 // File da salvare subito. Percorsi relativi: l'app vive in /hsk-coach/, non nella radice.
+// IMPORTANTE: ogni file nuovo dell'app va aggiunto qui, altrimenti offline manca.
 const FILE_APP = [
   './',
   './manifest.webmanifest',
   './css/style.css',
   './js/app.js',
+  './js/aggiornamenti.js',
+  './js/screens/oggi.js',
+  './js/screens/studia.js',
+  './js/screens/dizionario.js',
+  './js/screens/progressi.js',
+  './js/screens/impostazioni.js',
+  './js/screens/informazioni.js',
   './icons/icon-180.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
@@ -70,9 +78,15 @@ self.addEventListener('fetch', (evento) => {
 
 // Messaggi dalla pagina
 self.addEventListener('message', (evento) => {
-  // La pagina chiede il numero di versione per mostrarlo
+  // La pagina chiede il numero di versione per mostrarlo.
+  // Rispondo sul canale privato che la pagina manda insieme alla domanda.
   if (evento.data?.tipo === 'versione') {
-    evento.source.postMessage({ tipo: 'versione', versione: VERSIONE });
+    const risposta = { tipo: 'versione', versione: VERSIONE };
+    if (evento.ports[0]) {
+      evento.ports[0].postMessage(risposta);
+    } else {
+      evento.source.postMessage(risposta);
+    }
   }
   // Ho toccato "Aggiorna": questa versione in attesa diventa quella attiva
   if (evento.data?.tipo === 'attiva') {
