@@ -2,7 +2,7 @@
 // IMPORTANTE: a ogni modifica di un file dell'app aumenta VERSIONE,
 // altrimenti l'iPhone continua a mostrare la versione vecchia.
 
-const VERSIONE = 1;
+const VERSIONE = 2;
 
 // Tutte le cache dell'app hanno il prefisso "hsk-coach-": i siti GitHub Pages
 // dello stesso account condividono il dominio, così non tocchiamo le cache degli altri.
@@ -30,9 +30,8 @@ self.addEventListener('install', (evento) => {
       cache.addAll(FILE_APP.map((url) => new Request(url, { cache: 'reload' })))
     )
   );
-  // Provvisorio: la versione nuova si attiva subito.
-  // Nel passo 0.3 sarà sostituito dall'avviso "Nuova versione: tocca per aggiornare".
-  self.skipWaiting();
+  // Niente attivazione immediata: la versione nuova resta in attesa finché
+  // non tocco "Aggiorna" nell'avviso (vedi il messaggio "attiva" più sotto).
 });
 
 self.addEventListener('activate', (evento) => {
@@ -69,9 +68,14 @@ self.addEventListener('fetch', (evento) => {
   evento.respondWith(caches.match(richiesta).then((salvata) => salvata || fetch(richiesta)));
 });
 
-// La pagina chiede il numero di versione per mostrarlo
+// Messaggi dalla pagina
 self.addEventListener('message', (evento) => {
+  // La pagina chiede il numero di versione per mostrarlo
   if (evento.data?.tipo === 'versione') {
     evento.source.postMessage({ tipo: 'versione', versione: VERSIONE });
+  }
+  // Ho toccato "Aggiorna": questa versione in attesa diventa quella attiva
+  if (evento.data?.tipo === 'attiva') {
+    self.skipWaiting();
   }
 });
