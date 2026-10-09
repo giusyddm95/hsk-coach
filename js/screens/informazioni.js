@@ -71,6 +71,16 @@ export function mostra(contenitore) {
       <p class="nota">Per ora l'app non contiene ancora dati da queste fonti: arriveranno dalla tappa 1.</p>
       <ul class="fonti">${elencoFonti}</ul>
     </section>
+
+    <section>
+      <h2>Per le prove</h2>
+      <nav class="elenco" aria-label="Pagine di prova">
+        <a class="riga" href="#diagnostica">
+          <span>Diagnostica</span>
+          <span class="freccia" aria-hidden="true">›</span>
+        </a>
+      </nav>
+    </section>
   `;
 
   const campoVersione = contenitore.querySelector('#info-versione');

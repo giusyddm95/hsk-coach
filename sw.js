@@ -2,7 +2,7 @@
 // IMPORTANTE: a ogni modifica di un file dell'app aumenta VERSIONE,
 // altrimenti l'iPhone continua a mostrare la versione vecchia.
 
-const VERSIONE = 4;
+const VERSIONE = 5;
 
 // Tutte le cache dell'app hanno il prefisso "hsk-coach-": i siti GitHub Pages
 // dello stesso account condividono il dominio, così non tocchiamo le cache degli altri.
@@ -25,6 +25,7 @@ const FILE_APP = [
   './js/screens/progressi.js',
   './js/screens/impostazioni.js',
   './js/screens/informazioni.js',
+  './js/screens/diagnostica.js',
   './icons/icon-180.png',
   './icons/icon-192.png',
   './icons/icon-512.png',

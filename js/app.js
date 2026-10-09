@@ -9,11 +9,12 @@ import * as dizionario from './screens/dizionario.js';
 import * as progressi from './screens/progressi.js';
 import * as impostazioni from './screens/impostazioni.js';
 import * as informazioni from './screens/informazioni.js';
+import * as diagnostica from './screens/diagnostica.js';
 
-const SCHERMATE = { oggi, studia, dizionario, progressi, impostazioni, informazioni };
+const SCHERMATE = { oggi, studia, dizionario, progressi, impostazioni, informazioni, diagnostica };
 
-// Informazioni non ha una voce sua nella barra: si apre da Impostazioni
-const VOCE_DELLA_BARRA = { informazioni: 'impostazioni' };
+// Informazioni e Diagnostica non hanno una voce loro nella barra: si aprono da Impostazioni
+const VOCE_DELLA_BARRA = { informazioni: 'impostazioni', diagnostica: 'impostazioni' };
 
 const contenitore = document.getElementById('schermata');
 

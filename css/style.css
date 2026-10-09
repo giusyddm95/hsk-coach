@@ -134,6 +134,25 @@ a {
   text-decoration: none;
 }
 
+/* Pulsante pieno, alto almeno 44 px per il dito.
+   Rosso fisso in entrambi i temi: il bianco sopra resta leggibile. */
+.pulsante {
+  min-height: 44px;
+  margin: 4px 0 8px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 10px;
+  background: #b91c1c;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pulsante:disabled {
+  opacity: 0.6;
+}
+
 /* Pulsante che sembra un link, ma alto almeno 44 px per il dito */
 .pulsante-testo {
   min-height: 44px;
@@ -172,6 +191,44 @@ a {
 .licenza {
   color: var(--testo-tenue);
   font-size: 15px;
+}
+
+.piccolo {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+/* Coppie "etichetta: valore" della pagina Diagnostica */
+.dati {
+  margin: 0 0 12px;
+}
+
+.dati dt {
+  margin-top: 10px;
+  color: var(--testo-tenue);
+  font-size: 15px;
+}
+
+.dati dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* 16 px: con un testo più piccolo iOS ingrandisce la pagina quando tocchi il campo */
+.testo-risultati {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--bordo);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--testo);
+  font: 16px/1.4 ui-monospace, Menlo, Consolas, monospace;
+}
+
+.schermata audio {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
 }
 
 /* ---------- Barra di navigazione in basso ---------- */
@@ -244,19 +301,7 @@ body.con-avviso .schermata {
   box-shadow: 0 4px 16px rgb(0 0 0 / 0.25);
 }
 
-.avviso button {
-  min-height: 44px;
-  padding: 0 18px;
-  border: none;
-  border-radius: 10px;
-  /* Rosso fisso in entrambi i temi: il bianco sopra resta leggibile */
-  background: #b91c1c;
-  color: #fff;
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.avviso button:disabled {
-  opacity: 0.6;
+.avviso .pulsante {
+  flex: none;
+  margin: 0;
 }
