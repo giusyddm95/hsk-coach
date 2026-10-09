@@ -1,0 +1,8 @@
+# File scaricati dalle fonti dei dati (si rigenerano con tools/scarica-fonti.mjs)
+tools/fonti/
+
+# Pacchetti npm degli script in tools/
+node_modules/
+
+# Impostazioni locali di Claude Code
+.claude/settings.local.json
