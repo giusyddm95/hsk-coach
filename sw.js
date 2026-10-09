@@ -2,7 +2,7 @@
 // IMPORTANTE: a ogni modifica di un file dell'app aumenta VERSIONE,
 // altrimenti l'iPhone continua a mostrare la versione vecchia.
 
-const VERSIONE = 2;
+const VERSIONE = 3;
 
 // Tutte le cache dell'app hanno il prefisso "hsk-coach-": i siti GitHub Pages
 // dello stesso account condividono il dominio, così non tocchiamo le cache degli altri.
